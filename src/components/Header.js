@@ -15,7 +15,9 @@ const Header = (props) => (
       <Icon name="bars" color="white" size={25} />
     </TouchableWithoutFeedback>
     <Image style={styles.logo} source={require('../images/logo.png')} />
-    <Icon name="search" color="white" size={25} />
+    <TouchableWithoutFeedback onPress={() => props.nav.push({ ident: 'Search' })}>
+      <Icon name="search" color="white" size={25} />
+    </TouchableWithoutFeedback>
   </View>
 );
 

@@ -1,58 +1,59 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  StatusBar
+  Navigator
 } from 'react-native';
-import SideMenu from 'react-native-side-menu';
 
-import List from './components/List';
-import Slider from './components/Slider';
-import Header from './components/Header';
-import Menu from './components/Menu';
+import App from './app';
+import Search from './components/Search';
+import buildStyleInterpolator from 'buildStyleInterpolator';
 
-class App extends Component {
-  state = {
-    isOpen: false
+const NoTransition = {
+  opacity: {
+    from: 1,
+    to: 1,
+    min: 1,
+    max: 1,
+    type: 'linear',
+    extrapolate: false,
+    round: 100
+  }
+}
+
+class IndexApp extends Component {
+  _renderScene(route, nav) {
+    const navigator = { nav };
+    switch (route.ident) {
+      case 'App':
+        return <App {...navigator} />;
+      case 'Search':
+        return <Search {...navigator} />;
+    }
   }
 
-  toggleMenu() {
-    this.setState({ isOpen: !this.state.isOpen });
-  }
-
-  updateMenu(isOpen) {
-    this.setState({ isOpen });
+  _configureScene(route, routeStack) {
+    switch (route.ident) {
+      case 'Search':
+        return {
+          ...Navigator.SceneConfigs.FloatFromLeft,
+          gestures: null,
+          defaultTransitionVelocity: 100,
+          animationInterpolators: {
+            into: buildStyleInterpolator(NoTransition),
+            out: buildStyleInterpolator(NoTransition)
+          }
+        };
+    }
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <StatusBar
-          barStyle="light-content"
-        />
-        <SideMenu
-          menu={<Menu />}
-          isOpen={this.state.isOpen}
-          onChange={(isOpen) => this.updateMenu(isOpen)}
-        >
-          <Header toggle={this.toggleMenu.bind(this)} />
-          <ScrollView style={{ backgroundColor: 'black' }}>
-            <Slider />
-            <List />
-          </ScrollView>
-        </SideMenu>
-      </View>
+      <Navigator
+        initialRoute={{ ident: 'App' }}
+        renderScene={this._renderScene}
+        configureScene={this._configureScene}
+      />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'black'
-  }
-});
-
-export default App;
+export default IndexApp;

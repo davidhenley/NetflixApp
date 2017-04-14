@@ -44,7 +44,9 @@ class List extends Component {
 
 const styles = StyleSheet.create({
   text: {
-    color: 'white'
+    color: 'white',
+    margin: 5,
+    marginLeft: 10
   }
 });
 

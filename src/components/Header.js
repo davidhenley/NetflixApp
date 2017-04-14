@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Header = (props) => (
   <View style={styles.container}>
-    <TouchableWithoutFeedback onPress={() => null}>
+    <TouchableWithoutFeedback onPress={() => props.toggle()}>
       <Icon name="bars" color="white" size={25} />
     </TouchableWithoutFeedback>
     <Image style={styles.logo} source={require('../images/logo.png')} />
@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 15,
-    paddingTop: 25
+    backgroundColor: 'black',
+    paddingHorizontal: 15
   },
   logo: {
     width: 120,
